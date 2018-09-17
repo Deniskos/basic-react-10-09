@@ -3,12 +3,12 @@ import React, { PureComponent } from 'react'
 class Article extends PureComponent {
   render() {
     console.log('---', 'rendering')
-    const { article, isOpen } = this.props
+    const { article, isOpen, toggleOpen } = this.props
     return (
       <div>
         <div>
           <h3 ref={this.setTitleRef}>{article.title}</h3>
-          <button onClick={this.handleBtnClick}>
+          <button onClick={this.handleBtnClick.bind(this, article.id)}>
             {isOpen ? 'close' : 'open'}
           </button>
         </div>
@@ -19,7 +19,10 @@ class Article extends PureComponent {
 
   setTitleRef = (titleRef) => console.log(titleRef)
 
-  handleBtnClick = () => this.props.toggleOpen(this.props.article.id)
+  handleBtnClick = () => {
+    console.log('1')
+    this.props.toggleOpen(this.props.article.id)
+  }
 }
 
 export default Article
