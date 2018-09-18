@@ -1,29 +1,51 @@
 import React, { Component } from 'react'
 
 class CommentsList extends Component {
-  render() {
-    const { article, isCommentsOpen } = this.props
+  state = {
+    isCommentsOpen: null
+  }
 
+  render() {
+    // const {isCommentsOpen} = this.props
     return (
+      <section>
+        <button
+          type="button"
+          className="btn btn-outline-secondary"
+          onClick={this.commentBtnClick}
+        >
+          {this.state.isCommentsOpen ? 'hide comments' : 'show comments'}
+        </button>
+
+        {this.body}
+      </section>
+    )
+  }
+
+  get body() {
+    const { comments } = this.props
+    return comments.map((comment) => (
       <div>
-        <button>comments open</button>
-        {isCommentsOpen && (
-          <section>
-            COMMENTS
-            <h4>{article.comments[0].user}</h4>
-            <div>{article.comments[0].text}</div>
-          </section>
+        {this.state.isCommentsOpen && (
+          <div className="alert alert-secondary" role="alert" key={comment.id}>
+            <h4>{comment.user}</h4>
+            <div>{comment.text}</div>
+          </div>
         )}
       </div>
-    )
+    ))
+  }
 
-    // return article.comments.map((comment) => (
-    //   <div>
-    //     <h4>{comment.user}</h4>
-    //     <div>{comment.text}</div>
-    //   </div>
-    // ))
+  commentBtnClick = () => {
+    this.setState({
+      isCommentsOpen: !this.state.isCommentsOpen
+    })
   }
 }
+
+// function commentBtnClick = (isCommentsOpen) =>
+// this.setState({
+//   isCommentsOpen: this.state.isCommentsOpen === isCommentsOpen ? null : isCommentsOpen
+// })
 
 export default CommentsList

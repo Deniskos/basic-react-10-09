@@ -6,6 +6,7 @@ import ArticlesChart from './components/articles-chart'
 import articles from './fixtures'
 import UserForm from './components/user-form'
 import PickerRange from './components/day-picker'
+import './style.css'
 
 class App extends Component {
   state = {
