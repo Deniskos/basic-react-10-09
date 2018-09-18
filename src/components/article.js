@@ -3,12 +3,12 @@ import CommentsList from './comments-list'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 class Article extends PureComponent {
-  /*state = {
-    isCommentsOpen: true
-  }*/
+  state = {
+    openCommentsId: null
+  }
 
   render() {
-    const { article, isOpen, toggleOpen } = this.props
+    const { article, isOpen } = this.props
     return (
       <div>
         <div>
@@ -25,9 +25,12 @@ class Article extends PureComponent {
         {isOpen && (
           <section>
             {article.text}
-
-            {/*<CommentsList isCommentsOpen={this.state.isCommentsOpen} comments={article.comments} />*/}
-            <CommentsList comments={article.comments} />
+            <CommentsList
+              article={article}
+              comments={article.comments}
+              isCommentsOpen={this.state.openCommentsId === article.id}
+              onCommentClick={this.handleCommentClick.bind(this, article.id)}
+            />
           </section>
         )}
       </div>
@@ -39,6 +42,12 @@ class Article extends PureComponent {
   handleBtnClick = () => {
     this.props.toggleOpen(this.props.article.id)
   }
+
+  handleCommentClick = (openCommentsId) =>
+    this.setState({
+      openCommentsId:
+        this.state.openCommentsId === openCommentsId ? null : openCommentsId
+    })
 }
 
 export default Article

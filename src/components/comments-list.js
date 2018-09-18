@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
 
 class CommentsList extends Component {
-  state = {
-    isCommentsOpen: null
-  }
-
   render() {
-    // const {isCommentsOpen} = this.props
+    const { article, isCommentsOpen, onCommentClick } = this.props
     return (
-      <section>
+      <section className="comments-section" key={article.id}>
         <button
           type="button"
-          className="btn btn-outline-secondary"
-          onClick={this.commentBtnClick}
+          className="btn btn-outline-secondary comments-section__btn"
+          onClick={onCommentClick}
         >
-          {this.state.isCommentsOpen ? 'hide comments' : 'show comments'}
+          {isCommentsOpen ? 'hide comments' : 'show comments'}
         </button>
 
         {this.body}
@@ -23,29 +19,18 @@ class CommentsList extends Component {
   }
 
   get body() {
-    const { comments } = this.props
+    const { comments, isCommentsOpen } = this.props
     return comments.map((comment) => (
-      <div>
-        {this.state.isCommentsOpen && (
-          <div className="alert alert-secondary" role="alert" key={comment.id}>
-            <h4>{comment.user}</h4>
-            <div>{comment.text}</div>
+      <div key={comment.id}>
+        {isCommentsOpen && (
+          <div className="comments__wrapper alert alert-secondary" role="alert">
+            <h4 className="comments__user">{comment.user}</h4>
+            <div className="comments__text">{comment.text}</div>
           </div>
         )}
       </div>
     ))
   }
-
-  commentBtnClick = () => {
-    this.setState({
-      isCommentsOpen: !this.state.isCommentsOpen
-    })
-  }
 }
-
-// function commentBtnClick = (isCommentsOpen) =>
-// this.setState({
-//   isCommentsOpen: this.state.isCommentsOpen === isCommentsOpen ? null : isCommentsOpen
-// })
 
 export default CommentsList
