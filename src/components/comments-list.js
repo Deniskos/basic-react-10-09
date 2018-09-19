@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
+import Comment from './comment'
+import toggleOpen from '../decorators/toggleOpen'
 
 class CommentsList extends Component {
   render() {
-    const { article, isCommentsOpen, onCommentClick } = this.props
+    const { article, isOpen, toggleOpen } = this.props
     return (
       <section className="comments-section" key={article.id}>
         <button
           type="button"
           className="btn btn-outline-secondary comments-section__btn"
-          onClick={onCommentClick}
+          onClick={toggleOpen}
         >
-          {isCommentsOpen ? 'hide comments' : 'show comments'}
+          {isOpen ? 'hide comments' : 'show comments'}
         </button>
 
         {this.body}
@@ -19,18 +21,19 @@ class CommentsList extends Component {
   }
 
   get body() {
-    const { comments, isCommentsOpen } = this.props
+    const { comments, isOpen } = this.props
     return comments.map((comment) => (
-      <div key={comment.id}>
-        {isCommentsOpen && (
-          <div className="comments__wrapper alert alert-secondary" role="alert">
-            <h4 className="comments__user">{comment.user}</h4>
-            <div className="comments__text">{comment.text}</div>
-          </div>
-        )}
+      <div
+        className="comments__wrapper alert alert-secondary"
+        role="alert"
+        key={comment.id}
+      >
+        {isOpen && <Comment comment={comment} />}
       </div>
     ))
   }
 }
 
-export default CommentsList
+const CommentListWidthToggleOpen = toggleOpen(CommentsList)
+
+export default CommentListWidthToggleOpen

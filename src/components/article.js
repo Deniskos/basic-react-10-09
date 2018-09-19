@@ -28,8 +28,8 @@ class Article extends PureComponent {
             <CommentsList
               article={article}
               comments={article.comments}
-              isCommentsOpen={this.state.openCommentsId === article.id}
-              onCommentClick={this.handleCommentClick.bind(this, article.id)}
+              isOpen={isOpen}
+              // onCommentClick={this.handleCommentClick.bind(this, article.id)}
             />
           </section>
         )}
