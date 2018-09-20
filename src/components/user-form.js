@@ -6,6 +6,8 @@ class UserForm extends Component {
   }
 
   render() {
+    console.log(typeof username)
+
     return (
       <div>
         Username:
